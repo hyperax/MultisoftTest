@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Core Path="/Multisoft/Core" Version="1.2">
+	<Options>
+		<CharPerLine>48</CharPerLine>
+	</Options>
+    <MainBoard>
+		<Interface Name="Serial" Type="Android" Path="/dev/ttyS1" BaudRate="115200"/>
+        <Interface Name="Serial1" Type="Android" Path="/dev/ttyS3" BaudRate="115200"/>
+		<Interface Name="PrinterUart" Interface="Serial"/>
+		<Interface Name="SerialCmdUART" Interface="Serial1" Timeout="1000"/>
+		<Interface Name="SerialCmdSPI" Interface="Serial1" Timeout="1000"/>
+		<Interface Name="SpiFlashInterface" Interface="SerialCmdSPI" />
+	    <Device Type="FiscalModuleUART" Interface="SerialCmdUART"/>
+	    <Device Type="Printer" Model="ESCPOS" Interface="PrinterUart"/>
+	    <Device Type="Storage" Name="M25PE16" Interface="SpiFlashInterface" />
+		<Device Type="RTC" Model="CALENDAR" />
+		<Device Type="FiscalData" Storage="M25PE16" />
+	</MainBoard>
+	<RecJournal Type="RJFD">
+		<FiscalData CRC="ECC">
+			<Rec Type="SysRec" />
+			<Rec Type="RegRec" Count="11" />
+			<Rec Type="EklzRec" Count="50" />
+			<Rec Type="ZRec" Count="5000" />
+		</FiscalData>
+	</RecJournal>
+</Core>
